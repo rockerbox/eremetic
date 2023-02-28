@@ -177,7 +177,7 @@ func (s *offerSorter) Less(i, j int) bool {
 }
 
 func sortByLeastMemAvailable(offers []*mesosproto.Offer) {
-    byId := func(o1, o2 *mesosproto.Offer) bool {
+    byID := func(o1, o2 *mesosproto.Offer) bool {
 		var o1id, o2id int64
 		for _, res := range o1.Resources {
 			if res.GetName() == "slave_id" {
@@ -194,5 +194,5 @@ func sortByLeastMemAvailable(offers []*mesosproto.Offer) {
 
 		return o1id > o2id
 	}
-    By(byId).Sort(offers)
+    By(byID).Sort(offers)
 }
