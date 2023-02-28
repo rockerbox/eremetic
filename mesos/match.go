@@ -176,19 +176,19 @@ func (s *offerSorter) Less(i, j int) bool {
 
 func sortByLeastMemAvailable(offers []*mesosproto.Offer) {
         mem := func(o1, o2 *mesosproto.Offer) bool {
-		var o1host, o2host float64
+		var o1id, o2id float64
 		for _, res := range o1.Resources {
-			if res.GetName() == "hostname" {
-				o1host = res.Scalar.GetValue()
+			if res.GetName() == "slave_id" {
+				o1id = res.Scalar.GetValue()
 			}
 		}
 		for _, res := range o2.Resources {
-			if res.GetName() == "hostname" {
-				o2host = res.Scalar.GetValue()
+			if res.GetName() == "slave_id" {
+				o2id = res.Scalar.GetValue()
 			}
 		}
 
-		return o1host > o2host
+		return o1id > o2id
 	}
     By(mem).Sort(offers)
 }
