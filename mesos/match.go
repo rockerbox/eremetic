@@ -178,7 +178,6 @@ func (s *offerSorter) Less(i, j int) bool {
 
 func sortByLeastMemAvailable(offers []*mesosproto.Offer) {
     byID := func(o1, o2 *mesosproto.Offer) bool {
-		var o1id, o2id int64
 		s1 := o1.GetSlaveId().GetValue()
 		s2 := o2.GetSlaveId().GetValue()
 
