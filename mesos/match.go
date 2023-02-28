@@ -184,8 +184,8 @@ func sortByLeastMemAvailable(offers []*mesosproto.Offer) {
 		split1 := strings.Split(s1,"-S")
 		split2 := strings.Split(s2,"-S")
 
-		o1id, err := strconv.Atoi(splitString[len(split1)-1])
-		o2id, err := strconv.Atoi(splitString[len(split2)-1])
+		o1id, err := strconv.Atoi(split1[len(split1)-1])
+		o2id, err := strconv.Atoi(split2[len(split2)-1])
 
 		return o1id > o2id
 	}
