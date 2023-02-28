@@ -145,11 +145,11 @@ func matchOffer(task eremetic.Task, offers []*mesosproto.Offer) (*mesosproto.Off
 	return nil, offers
 }
 
-// Offer sorter to best-fit bin pack by mem
-
+// By is a helper to sort offer to best-fit bin pack by mem
 type By func(o1, o2 *mesosproto.Offer) bool
 
-func (by By) Sort(offers []mesosproto.Offer) {
+// Sort provides sort function across offer array
+func (by By) Sort(offers []*mesosproto.Offer) {
 	os := &offerSorter{
 		offers: offers,
 		by:     by,
@@ -158,7 +158,7 @@ func (by By) Sort(offers []mesosproto.Offer) {
 }
 
 type offerSorter struct {
-	offers []mesosproto.Offer
+	offers []*mesosproto.Offer
 	by     func(o1, o2 *mesosproto.Offer) bool
 }
 
@@ -171,10 +171,10 @@ func (s *offerSorter) Swap(i, j int) {
 }
 
 func (s *offerSorter) Less(i, j int) bool {
-	return s.by(&s.offers[i], &s.offers[j])
+	return s.by(s.offers[i], s.offers[j])
 }
 
-func sortByLeastMemAvailable(offers []mesosproto.Offer) {
+func sortByLeastMemAvailable(offers []*mesosproto.Offer) {
         mem := func(o1, o2 *mesosproto.Offer) bool {
 		var o1mem, o2mem float64
 		for _, res := range o1.Resources {
@@ -187,10 +187,6 @@ func sortByLeastMemAvailable(offers []mesosproto.Offer) {
 				o2mem = res.Scalar.GetValue()
 			}
 		}
-
-                if o1mem == nil || o2mem == nil {
-                    return false
-                }
 
 		return o1mem > o2mem
 	}
