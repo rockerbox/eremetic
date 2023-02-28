@@ -177,20 +177,22 @@ func (s *offerSorter) Less(i, j int) bool {
 }
 
 func sortByLeastMemAvailable(offers []*mesosproto.Offer) {
-        mem := func(o1, o2 *mesosproto.Offer) bool {
+    byId := func(o1, o2 *mesosproto.Offer) bool {
 		var o1id, o2id int64
 		for _, res := range o1.Resources {
 			if res.GetName() == "slave_id" {
-				o1id, err := strconv.Atoi(strings.Split(res.Scalar.GetValue(),"-S"))
+				splitString := strings.Split(res.Scalar.GetValue(),"-S")
+				o1id, err := strconv.Atoi(splitString[len(splitString)-1])
 			}
 		}
 		for _, res := range o2.Resources {
 			if res.GetName() == "slave_id" {
-				o2id, err = strconv.Atoi(strings.Split(res.Scalar.GetValue(),"-S"))
+				splitString := strings.Split(res.Scalar.GetValue(),"-S")
+				o2id, err = strconv.Atoi(splitString[len(splitString)-1])
 			}
 		}
 
 		return o1id > o2id
 	}
-    By(mem).Sort(offers)
+    By(byId).Sort(offers)
 }
