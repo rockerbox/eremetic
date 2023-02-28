@@ -161,7 +161,7 @@ func (s *Scheduler) ResourceOffers(driver mesossched.SchedulerDriver, offers []*
 
 
 loop:
-	for len(offers) > 0 {
+	for len(offers) > 4 {
 		select {
 		case <-s.shutdown:
 			logrus.Info("Shutting down: declining offers")
