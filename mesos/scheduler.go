@@ -137,6 +137,13 @@ func (s *Scheduler) Disconnected(mesossched.SchedulerDriver) {
 	driver, err := createDriver(s, s.settings)
 	s.driver = driver
 
+        if !s.initialised {
+                driver.ReconcileTasks([]*mesosproto.TaskStatus{})
+                s.initialised = true
+        } else {
+                s.Reconcile(driver)
+        }
+
 	if err != nil {
 		logrus.WithError(err).Error("Unable to create scheduler driver")
 	}
